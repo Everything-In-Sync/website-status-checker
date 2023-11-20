@@ -19,7 +19,7 @@ def format_expiry_date(expiry_str):
     # Parse the date
     expiry_date = datetime.strptime(expiry_str, '%b %d %H:%M:%S %Y GMT')
     # Format it to just the date
-    return expiry_date.strftime('%Y-%m-%d')
+    return expiry_date.strftime('%m-%d-%y')
 
 def test_websites(websites, max_response_time=2):
     email_report = ""
@@ -33,7 +33,7 @@ def test_websites(websites, max_response_time=2):
 
             # Check if the response time is within the acceptable limit
             if response_time < max_response_time:
-                response_time_status = f"Response time: {response_time} seconds"
+                response_time_status = f"in {response_time} seconds"
             else:
                 response_time_status = f"WARNING: Slow response time: {response_time} seconds"
                 all_ok = False
@@ -49,8 +49,8 @@ def test_websites(websites, max_response_time=2):
                         expiry_date = format_expiry_date(expiry_str)
                 except Exception as e:
                     print(f"Error checking SSL certificate for {site}: {e}")
-                email_report += f"OK: {site} is up (Status Code 200). {response_time_status} SSL Expire: {expiry_date}\n"
-                terminal_report += Fore.GREEN + f"OK: {site} is up (Status Code 200). {response_time_status} SSL Expire: {expiry_date}\n" + Style.RESET_ALL
+                email_report += f"OK: {site} is up (Status Code 200) {response_time_status} SSL Expire: {expiry_date}\n"
+                terminal_report += Fore.GREEN + f"OK: {site} is up (Status Code 200) {response_time_status} SSL Expire: {expiry_date}\n" + Style.RESET_ALL
             else:
                 email_report += f"WARNING: {site} returned a non-OK status code {response_status}. {response_time_status}\n"
                 terminal_report += Fore.RED + f"WARNING: {site} returned a non-OK status code {response_status}. {response_time_status}\n" + Style.RESET_ALL
@@ -92,12 +92,12 @@ if all_ok:
     subject = "Websites: All Good"
 else:
     subject = "Websites: Issue"
-sender_email = "email"
-receiver_email = "email"
-smtp_server = "server"
+sender_email = ""
+receiver_email = ""
+smtp_server = ""
 smtp_port = 587
-smtp_username = "username"
-smtp_password = "password"
+smtp_username = ""
+smtp_password = ""
 send_email(
     subject,
     report,
