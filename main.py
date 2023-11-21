@@ -21,7 +21,7 @@ def format_expiry_date(expiry_str):
     # Format it to just the date
     return expiry_date.strftime('%m-%d-%y')
 
-def test_websites(websites, max_response_time=2):
+def test_websites(websites, max_response_time=3):
     email_report = ""
     terminal_report = ""
     all_ok = True
